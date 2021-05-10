@@ -15,16 +15,34 @@ def actors_contains_name(dataa: pd.DataFrame, name):
     
     return results[filter1].drop_duplicates()
 
-def work():
-
-    data = gd1.Search(['2016 Nov 1', '2016 Nov 5'],
+def search_name(dataa: pd.DataFrame, name):
+    if(dataa == None):
+        dataa = gd1.Search(['2016 Nov 1', '2016 Nov 2'],
                      table='events', output='pd')
 
-    searchRes = actors_contains_name(data, 'biden')                     
+    searchRes = actors_contains_name(dataa, name)
 
-    print(searchRes.head(15))
+    print(searchRes.head(20))
+    print("Chose index: \n")
+    index = int(input())
+
+    return searchRes.values[index]
+
+def search():
+    value = None
+    tmpData = None
+    print("Insert name, or 'return' to return value: ", value)
+    name = input()
+    while(name != "return"):
+        value = search_name(tmpData, name)
+        print("Output value: ", value)
+        print("Insert name, or 'return' to return value: ", value)
+        name = input()
+    return value
+
+
 
 if __name__ == '__main__':
-    work()
+    print("Returned: ", search())
 
 
