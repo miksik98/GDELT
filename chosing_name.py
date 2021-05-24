@@ -20,14 +20,19 @@ def search_name(dataa: pd.DataFrame, name):
     searchRes = actors_contains_name(dataa, name)
 
     print(searchRes.head(20))
-    print("Chose index: \n")
-    index = int(input())
-
+    print("Chose index: , or q if not want to chose\n")
+    input_line = input()
+    if(input_line == 'q'):
+        return None
+    index = int(input_line)
+    if(index > len(searchRes)):
+        return None
+        
     return searchRes.values[index][0]
 
 def search():
     value = None
-    tmpData = gd1.Search(['2016 Nov 1', '2016 Nov 2'],
+    tmpData = gd1.Search(['2021 May 20', '2021 May 23'],
                      table='events', output='pd')
     print("Insert name, or 'return' to return value: ", value)
     name = input()
