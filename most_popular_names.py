@@ -46,10 +46,13 @@ def count_actors(data, country):
 def work():
     data = load_data()
 
-    print("Select country name")
-    country_name = input()
+    country = None
+    while country == None:
+        print("Select country name")
+        country_name = input()
 
-    country = search_name(data, country_name)
+        country = search_name(data, country_name)
+    
     #country = "POLAND"
     print(country)
 
