@@ -12,11 +12,11 @@ counts = defaultdict(lambda: defaultdict(int))
 
 pd.set_option('max_columns', None)
 gd1 = gdelt.gdelt(version=1)
-
+dates = "2020 Dec 1- 2020 Dec 31"
 dataaa = None
 
 def load_data():
-    data = gd1.Search(['2020 Nov 1', '2020 Nov 4'],
+    data = gd1.Search(['2020 Dec 1', '2020 Dec 31'],
                     table='events', output='pd')
     return data
 
@@ -38,8 +38,9 @@ def count_actors(data, country):
     for index, row in data.iterrows():
         name = row["Actor2Name"]
         date = row["SQLDATE"]
-        if name == name and name != country and date>20201100 and date<20201105:
-            counts[name][date]+=1
+        num_articles = row["NumArticles"]
+        if name == name and name != country and date>=20201201 and date<=20201231:
+            counts[name][date]+= num_articles
     
     return counts
 
@@ -54,6 +55,9 @@ def work():
     data = load_data()
 
     country = None
+
+    print("Select dates")
+    dates = input()
 
     country = "EUROPE"
 
@@ -78,8 +82,8 @@ def work():
         x, y = zip(*lists) # unpack a list of pairs into two tuples
         x2 = []
         for v in x:
-            x2.append(str(v))
-        plt.plot(x2, y, label=key)
+            x2.append(str((v//100)%100) + "-" + str(v%100))
+        plt.plot(x2, y, label=key + " (" + str(sum(y)) + ")")
     plt.legend()
     plt.show()
     return result
