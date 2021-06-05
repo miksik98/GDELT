@@ -37,7 +37,7 @@ def fig_graph(fig, source_to_dest, title):
             lon=[float(slon), float(dlon)],
             mode='lines',
             text=[c1, c2],
-            line=dict(width=count/300, color="red")
+            line=dict(width=min(count/300, 4), color="red")
         ))
 
     fig.update_layout(title_text=title,
@@ -46,11 +46,11 @@ def fig_graph(fig, source_to_dest, title):
 
 
 for time in times_series:
-    # res = gd1.Search(time,
-    #                      table='events', output='pd')
+    res = gd1.Search(time,
+                         table='events', output='pd')
     listToStr = ' '.join([str(elem) for elem in time])
     # res.to_csv('{}.csv'.format(listToStr))
-    res = pd.read_csv('{}.csv'.format(listToStr))
+    # res = pd.read_csv('{}.csv'.format(listToStr))
     res = res.loc[res['Actor1Code'] == 'REF']
 
     # print(res.head(15))
