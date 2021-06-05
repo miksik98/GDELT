@@ -43,25 +43,36 @@ def count_actors(data, country):
     
     return counts
 
+def filter_actors(data):
+    #print("data: ", data)
+    res = sorted(data.items(), key=lambda k_v: sum(k_v[1].values()), reverse = True)[:10]
+    #print("values: \n\n", res)
+    
+    return res
+
 def work():
     data = load_data()
 
     country = None
+
+    country = "EUROPE"
+
     while country == None:
         print("Select country name")
         country_name = input()
 
         country = search_name(data, country_name)
     
-    #country = "POLAND"
     print(country)
 
     res = get_country_data(country, data)
     print(res.head())
 
     result = count_actors(res, country)
-    print(result)
-    for key, value in result.items():
+    res = filter_actors(result)
+    result = res
+    #print(result)
+    for key, value in result:#.items():
         print(key)
         lists = sorted(value.items()) # sorted by key, return a list of tuples
         x, y = zip(*lists) # unpack a list of pairs into two tuples
@@ -69,7 +80,7 @@ def work():
         for v in x:
             x2.append(str(v))
         plt.plot(x2, y, label=key)
-    #plt.plot(*zip(*result))
+    plt.legend()
     plt.show()
     return result
 
